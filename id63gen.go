@@ -31,9 +31,9 @@ func reset() {
 
 // Next returns an ID
 func Next() int64 {
+	resetOnce.Do(reset)
 	mut.Lock()
 	defer mut.Unlock()
-	resetOnce.Do(reset)
 	now := time.Now().UnixNano()
 	ticks := now & tmask
 	if ticks != previousTicks {
